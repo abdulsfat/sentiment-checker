@@ -1,39 +1,90 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import red from "/dot-red.svg";
+import blue from "/dot-blue.svg";
+import myMemoji from "/memo.mov";
 
 const Sentiment = () => {
-  const [inputText, setInputText] = useState("");
+  // eslint-disable-next-line no-unused-vars
+  const [InputText, setInputText] = useState("");
   const [analysisResult, setAnalysisResult] = useState(null);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Get input value
     const text = event.target.elements.textInput.value;
     setInputText(text);
 
-    // Perform sentiment analysis (simulated delay for demonstration)
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const response = await fetch(
+        "https://sentiment-checker-backend.vercel.app/api/check",
+        // "http://localhost:3000/api/check",
 
-    // Simulated analysis result (replace with actual API call)
-    const mockResult = {
-      text: text,
-      sentiment: "negative",
-      categories: ["bad word"],
-    };
-
-    // Update state with analysis result
-    setAnalysisResult(mockResult);
-
-    // Reset the form
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ words: text }),
+        }
+      );
+      const data = await response.json();
+      if (!response.ok) {
+        console.error("API Error:", data);
+        setAnalysisResult(data);
+        setError("");
+      } else {
+        setAnalysisResult(data);
+        setError("");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setError("Failed to fetch data");
+    }
     event.target.reset();
   };
+  const highlightWords = (text, issues) => {
+    const words = text.split(" ");
+    return words.map((word, index) => {
+      const issue = issues.find((issue) => issue.badWord === word);
+      const isSupportWord = issues.some(
+        (issue) =>
+          issue.isPreviousWordSupportive === word ||
+          issue.isNextWordSupportive === word
+      );
 
+      if (issue) {
+        return (
+          <span key={index} className="font-bold text-red-500">
+            {word}{" "}
+          </span>
+        );
+      } else if (isSupportWord) {
+        return (
+          <span key={index} className="font-semibold text-indigo-800">
+            {word}{" "}
+          </span>
+        );
+      }
+      return word + " ";
+    });
+  };
   return (
-    <div className="container flex flex-col items-center justify-center h-screen mx-auto">
+    <div
+      className="flex flex-col items-center justify-center h-screen mx-auto "
+      style={{
+        backgroundImage: `
+      linear-gradient(to top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)),
+      url(/bg-2.png)
+    `,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
       <h1 className="mb-8 text-4xl font-medium">
-        Enter Text for Sentiment Analysis
+        ✨ Enter Text for Sentiment Analysis ✨
       </h1>
       <form onSubmit={handleSubmit} className="w-full max-w-lg">
-        <div className="flex items-center py-2 border-2 rounded-xl">
+        <div className="flex items-center py-2 bg-white/50 rounded-xl ring-1 ring-black/20">
           <input
             type="text"
             id="textInput"
@@ -45,24 +96,58 @@ const Sentiment = () => {
           />
           <button
             type="submit"
-            className="px-4 py-2 font-bold text-white bg-blue-500 rounded-lg me-1 hover:bg-blue-700"
+            className="px-4 py-2 font-bold text-white bg-indigo-500 rounded-lg me-2 hover:bg-indigo-700"
           >
             Analyze
           </button>
         </div>
       </form>
+      {error && (
+        <div className="mt-4 text-red-500">
+          <strong>Error:</strong> {error}
+        </div>
+      )}
       {analysisResult && (
-        <div className="p-4 mt-8 bg-gray-100 rounded-xl">
-          <h2 className="mb-2 text-xl font-medium">Analysis Result:</h2>
-          <p>
-            <strong>Text:</strong> {analysisResult.text}
-          </p>
-          <p>
-            <strong>Sentiment:</strong> {analysisResult.sentiment}
-          </p>
-          <p>
-            <strong>Categories:</strong> {analysisResult.categories.join(", ")}
-          </p>
+        <div className="flex flex-row justify-between w-[36%] p-5 mt-10 rounded-2xl bg-white ">
+          <div className="flex flex-col justify-center">
+            {analysisResult.value === "positive" ? (
+              <p className="px-4 py-[2px] text-sm bg-green-200 w-max rounded-3xl">
+                {analysisResult.value}
+              </p>
+            ) : (
+              <p className="px-4 py-[2px] text-sm bg-red-200 w-max rounded-3xl">
+                {analysisResult.value}
+              </p>
+            )}
+            <h1 className="mt-8 text-xl font-bold">{analysisResult.message}</h1>
+            <h2 className="mt-2 font-medium w-80">
+              {analysisResult.value === "positive"
+                ? analysisResult.data
+                : highlightWords(
+                    analysisResult.data,
+                    analysisResult.issues,
+                    analysisResult.value
+                  )}
+            </h2>
+            {/* hiden kalo positif */}
+
+            <div className="flex items-center mt-10">
+              <img src={red} alt="" className="mr-2" />
+              <p className="mr-8 text-sm">Bad Word</p>
+              <img src={blue} alt="" className="mr-2" />
+              <p className="text-sm">Support Word</p>
+            </div>
+          </div>
+          <div className="me-[-20px] bottom-0 w-40 rounded-3xl">
+            <video
+              className="object-cover h-40 pb-1 "
+              muted
+              loop={true}
+              autoPlay
+              src={myMemoji}
+              alt=""
+            />
+          </div>
         </div>
       )}
     </div>
