@@ -1,7 +1,7 @@
 import { useState } from "react";
 import red from "/dot-red.svg";
 import blue from "/dot-blue.svg";
-import myMemoji from "/memo.mov";
+import { memo } from "../../constants/memo";
 
 const Sentiment = () => {
   // eslint-disable-next-line no-unused-vars
@@ -14,10 +14,16 @@ const Sentiment = () => {
     const text = event.target.elements.textInput.value;
     setInputText(text);
 
+    const wordCount = text.trim().split(/\s+/).length;
+    if (wordCount < 5) {
+      setError("Please enter at least 5 word.");
+      return;
+    }
+
     try {
       const response = await fetch(
-        "https://sentiment-checker-backend.vercel.app/api/check",
-        // "http://localhost:3000/api/check",
+        // "https://sentiment-checker-backend.vercel.app/api/check",
+        "http://localhost:3000/api/check",
 
         {
           method: "POST",
@@ -68,6 +74,14 @@ const Sentiment = () => {
       return word + " ";
     });
   };
+
+  const getMemojiSrc = (value) => {
+    const memoItem = memo.find((item) => item.value === value);
+    return memoItem ? memoItem.src : null;
+  };
+
+  const myMemoji = analysisResult ? getMemojiSrc(analysisResult.value) : null;
+
   return (
     <div
       className="flex flex-col items-center justify-center h-screen mx-auto "
@@ -103,7 +117,7 @@ const Sentiment = () => {
         </div>
       </form>
       {error && (
-        <div className="mt-4 text-red-500">
+        <div className="p-1 px-5 mt-4 text-red-500 rounded-lg bg-white/50 ring-1 ring-black/5">
           <strong>Error:</strong> {error}
         </div>
       )}
@@ -129,7 +143,6 @@ const Sentiment = () => {
                     analysisResult.value
                   )}
             </h2>
-            {/* hiden kalo positif */}
 
             <div className="flex items-center mt-10">
               <img src={red} alt="" className="mr-2" />
