@@ -7,4 +7,12 @@ export const memo = [
     value: "neutral",
     src: "/neutral.mov",
   },
+  {
+    value: "very negative",
+    src: "/negative.mov",
+  },
+  {
+    value: "positive",
+    src: "/neutral.mov",
+  },
 ];

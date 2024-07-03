@@ -2,6 +2,7 @@ import { useState } from "react";
 import red from "/dot-red.svg";
 import blue from "/dot-blue.svg";
 import { memo } from "../../constants/memo";
+import Button from "../ui/Button";
 
 const Sentiment = () => {
   // eslint-disable-next-line no-unused-vars
@@ -22,8 +23,8 @@ const Sentiment = () => {
 
     try {
       const response = await fetch(
-        // "https://sentiment-checker-backend.vercel.app/api/check",
-        "http://localhost:3000/api/check",
+        "https://sentiment-checker-backend.vercel.app/api/check",
+        // "http://localhost:3000/api/check",
 
         {
           method: "POST",
@@ -108,12 +109,7 @@ const Sentiment = () => {
             aria-label="Enter text for sentiment analysis"
             required
           />
-          <button
-            type="submit"
-            className="px-4 py-2 font-bold text-white bg-indigo-500 rounded-lg me-2 hover:bg-indigo-700"
-          >
-            Analyze
-          </button>
+          <Button>Analyze</Button>
         </div>
       </form>
       {error && (
