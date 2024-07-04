@@ -23,8 +23,8 @@ const Sentiment = () => {
 
     try {
       const response = await fetch(
-        "https://sentiment-checker-backend.vercel.app/api/check",
-        // "http://localhost:3000/api/check",
+        // "https://sentiment-checker-backend.vercel.app/api/check",
+        "http://localhost:3000/api/check",
 
         {
           method: "POST",
@@ -77,11 +77,9 @@ const Sentiment = () => {
   };
 
   const getMemojiSrc = (value) => {
-    const memoItem = memo.find((item) => item.value === value);
-    return memoItem ? memoItem.src : null;
+    const memoji = memo.find((m) => m.value === value);
+    return memoji ? memoji.src : "";
   };
-
-  const myMemoji = analysisResult ? getMemojiSrc(analysisResult.value) : null;
 
   return (
     <div
@@ -153,7 +151,7 @@ const Sentiment = () => {
               muted
               loop={true}
               autoPlay
-              src={myMemoji}
+              src={getMemojiSrc(analysisResult.value)}
               alt=""
             />
           </div>

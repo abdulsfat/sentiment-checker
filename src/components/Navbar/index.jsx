@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { navLinks } from "../../constants/navlinks";
 import { Link, useLocation } from "react-router-dom";
-import myMemoji from "/memo.mov";
+import { getCloudinaryVideoUrl } from "../../constants/endpoints";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,6 +10,10 @@ const Navbar = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  const videoSrc = getCloudinaryVideoUrl(
+    "sentiment/video/exotmfvaoxdvsmx8qa0g.mov"
+  );
 
   return (
     <div className="fixed top-0 left-0 right-0 z-10">
@@ -21,7 +25,7 @@ const Navbar = () => {
             muted
             loop={true}
             autoPlay
-            src={myMemoji}
+            src={videoSrc}
             alt=""
           />
         </div>
