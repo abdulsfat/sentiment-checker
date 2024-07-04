@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { navLinks } from "../../constants/navlinks";
 import { Link, useLocation } from "react-router-dom";
-import { getCloudinaryVideoUrl } from "../../constants/endpoints";
+import { memo } from "../../constants/memo";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,9 +11,8 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const videoSrc = getCloudinaryVideoUrl(
-    "sentiment/video/exotmfvaoxdvsmx8qa0g.mov"
-  );
+  const mainMemo = memo.find((item) => item.value === "main");
+  const videoSrc = mainMemo ? mainMemo.src : "";
 
   return (
     <div className="fixed top-0 left-0 right-0 z-10">
@@ -94,7 +93,7 @@ const Navbar = () => {
                               : "text-slate-700 "
                           } ${
                             index === navLinks.length - 1
-                              ? "bg-white/80 shadow-sm hover:drop-shadow-xl"
+                              ? "bg-white/80 shadow-sm transition duration-300 ease-in-out hover:drop-shadow-xl"
                               : ""
                           } block rounded-lg px-3 py-2 text-sm `}
                           aria-current={

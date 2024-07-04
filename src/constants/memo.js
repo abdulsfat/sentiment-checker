@@ -2,6 +2,10 @@ import { getCloudinaryVideoUrl } from "./endpoints";
 
 export const memo = [
   {
+    value: "main",
+    src: getCloudinaryVideoUrl("sentiment/video/exotmfvaoxdvsmx8qa0g.mov"),
+  },
+  {
     value: "negative",
     src: getCloudinaryVideoUrl("sentiment/video/keqtlzen8yzpbznekbds.mov"),
   },
