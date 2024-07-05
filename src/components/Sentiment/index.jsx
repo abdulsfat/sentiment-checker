@@ -6,12 +6,15 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Sentiment = () => {
   const [analysisResult, setAnalysisResult] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleFormSubmit = async (text) => {
+    setIsLoading(true);
+    setAnalysisResult(null);
     try {
       const response = await fetch(
-        // "https://sentiment-checker-backend.vercel.app/api/check",
-        "http://localhost:3000/api/check",
+        "https://sentiment-checker-backend.vercel.app/api/check",
+        // "http://localhost:3000/api/check",
         {
           method: "POST",
           headers: {
@@ -42,6 +45,8 @@ const Sentiment = () => {
         transition: Slide,
       });
       setAnalysisResult(null);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -68,6 +73,12 @@ const Sentiment = () => {
         transitionDuration={300}
         transition={Slide}
       />
+      {isLoading && (
+        <div className="flex flex-col items-center justify-center mt-8">
+          <div className="w-12 h-12 border-4 border-indigo-500 border-solid rounded-full border-t-transparent animate-spin"></div>
+          <p className="mt-3 font-semibold text-md animate-pulse">Loading...</p>
+        </div>
+      )}
       {analysisResult && <SentimentResult result={analysisResult} />}
     </div>
   );

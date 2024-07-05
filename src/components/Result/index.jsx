@@ -37,7 +37,7 @@ const getMemojiSrc = (value) => {
 
 const SentimentResult = ({ result }) => {
   return (
-    <div className="flex flex-row justify-between p-5 mt-10 bg-white w-max rounded-2xl">
+    <div className="flex flex-row justify-between p-5 mt-10 bg-white  w-max rounded-2xl">
       <div className="flex flex-col justify-center">
         {result.value === "positive" ? (
           <p className="px-4 py-[2px] text-sm bg-green-200 w-max rounded-3xl">
