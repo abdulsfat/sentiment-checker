@@ -1,11 +1,13 @@
+/* eslint-disable react/prop-types */
 const Button = (props) => {
+  const { type, style, children } = props;
+
+  // Menggabungkan kelas Tailwind dengan prop style tambahan
+  const buttonClasses = `px-4 py-2 font-bold text-white bg-indigo-500 rounded-xl me-2 ${style} transition duration-300 ease-in-out hover:bg-indigo-700`;
+
   return (
-    <button
-      type="submit"
-      className="px-4 py-2 font-bold text-white bg-indigo-500 rounded-lg me-2 hover:bg-indigo-700"
-      // eslint-disable-next-line react/prop-types
-    >
-      {props.children}
+    <button type={type} className={buttonClasses}>
+      {children}
     </button>
   );
 };
