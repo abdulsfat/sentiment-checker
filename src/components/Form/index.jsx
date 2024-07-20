@@ -23,12 +23,12 @@ const SentimentForm = ({ onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-lg">
+    <form onSubmit={handleSubmit} className="w-full lg:px-0">
       <div className="flex items-center py-2 bg-white/50 rounded-xl ring-1 ring-black/20">
         <textarea
           id="textInput"
           name="textInput"
-          className="w-full px-2 py-1 text-gray-700 bg-transparent border-none appearance-none resize-none focus:outline-none"
+          className="w-full py-1 mx-2 text-gray-700 bg-transparent border-none appearance-none resize-none focus:outline-none"
           placeholder="Enter text for sentiment analysis..."
           aria-label="Enter text for sentiment analysis"
           required

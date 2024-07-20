@@ -52,7 +52,7 @@ const Sentiment = () => {
 
   return (
     <div
-      className="flex flex-col items-center justify-center h-full py-48 mx-auto"
+      className="flex flex-col items-center justify-center h-[80vh] lg:h-screen  py-20 lg:py-48 lg:mx-auto"
       style={{
         backgroundImage: `
           linear-gradient(to top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)),
@@ -62,24 +62,28 @@ const Sentiment = () => {
         backgroundPosition: "center",
       }}
     >
-      <h1 className="mb-8 text-4xl font-medium">
-        ✨ Enter Text for Sentiment Analysis ✨
-      </h1>
-      <SentimentForm onSubmit={handleFormSubmit} />
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar
-        transitionDuration={300}
-        transition={Slide}
-      />
-      {isLoading && (
-        <div className="flex flex-col items-center justify-center mt-8">
-          <div className="w-12 h-12 border-4 border-indigo-500 border-solid rounded-full border-t-transparent animate-spin"></div>
-          <p className="mt-3 font-semibold text-md animate-pulse">Loading...</p>
-        </div>
-      )}
-      {analysisResult && <SentimentResult result={analysisResult} />}
+      <div className="flex flex-col items-center justify-center">
+        <h1 className="mb-8 text-xl font-medium lg:text-4xl">
+          ✨ Enter Text for Sentiment Analysis ✨
+        </h1>
+        <SentimentForm onSubmit={handleFormSubmit} />
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar
+          transitionDuration={300}
+          transition={Slide}
+        />
+        {isLoading && (
+          <div className="flex flex-col items-center justify-center mt-8">
+            <div className="w-12 h-12 border-4 border-indigo-500 border-solid rounded-full border-t-transparent animate-spin"></div>
+            <p className="mt-3 font-semibold text-md animate-pulse">
+              Loading...
+            </p>
+          </div>
+        )}
+        {analysisResult && <SentimentResult result={analysisResult} />}
+      </div>
     </div>
   );
 };

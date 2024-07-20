@@ -37,7 +37,7 @@ const getMemojiSrc = (value) => {
 
 const SentimentResult = ({ result }) => {
   return (
-    <div className="flex flex-row justify-between p-5 mt-10 bg-white  w-max rounded-2xl">
+    <div className="flex flex-row justify-between p-5 mt-10 bg-white w-max rounded-2xl">
       <div className="flex flex-col justify-center">
         {result.value === "positive" ? (
           <p className="px-4 py-[2px] text-sm bg-green-200 w-max rounded-3xl">
@@ -49,7 +49,7 @@ const SentimentResult = ({ result }) => {
           </p>
         )}
         <h1 className="mt-8 text-xl font-bold">{result.message}</h1>
-        <h2 className="mt-2 font-medium w-96">
+        <h2 className="mt-2 font-medium lg:w-96">
           {result.value === "positive"
             ? result.data
             : highlightWords(result.data, result.issues, result.value)}
@@ -61,9 +61,9 @@ const SentimentResult = ({ result }) => {
           <p className="text-sm">Support Word</p>
         </div>
       </div>
-      <div className="me-[-20px] bottom-0 w-40 rounded-3xl">
+      <div className="me-[-20px] lg:w-0 w-24 bottom-0 h-32 lg:h-40 rounded-3xl ">
         <video
-          className="object-cover h-40 pb-1"
+          className="object-cover h-32 pb-1 lg:h-40"
           muted
           loop={true}
           autoPlay
