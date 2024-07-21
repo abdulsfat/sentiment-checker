@@ -61,7 +61,7 @@ const SentimentResult = ({ result }) => {
           <p className="text-sm">Support Word</p>
         </div>
       </div>
-      <div className="me-[-20px] lg:w-0 w-24 bottom-0 h-32 lg:h-40 rounded-3xl ">
+      <div className="me-[-20px] lg:w-40 w-24 bottom-0 h-32 lg:h-40 rounded-3xl ">
         <video
           className="object-cover h-32 pb-1 lg:h-40"
           muted
